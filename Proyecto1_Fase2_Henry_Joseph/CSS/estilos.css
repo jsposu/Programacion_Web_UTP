@@ -1,0 +1,546 @@
+/* ============================================================
+   estilos.css
+   Stylesheet for the "Portal de Registro y Consulta de Estudiantes".
+   Keeps the Phase 1 visual identity (blue NetLinks theme) and adds
+   the components required by Phase 2: login card, dashboard cards,
+   listing table, search bar and flash messages.
+   ============================================================ */
+
+:root {
+    --primary-color: #0d47a1;
+    --secondary-color: #1565c0;
+    --accent-color: #1e88e5;
+    --dark-color: #1a237e;
+    --light-bg: #f4f7f6;
+    --white: #ffffff;
+    --success-color: #2e7d32;
+    --error-color: #c62828;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Body: semi-transparent blue gradient over a technology image */
+body {
+    background: linear-gradient(135deg, rgba(13, 71, 161, 0.85), rgba(21, 101, 192, 0.75), rgba(30, 136, 229, 0.65)),
+                url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80') center/cover fixed no-repeat;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ---------- Header and navigation ---------- */
+header {
+    background-color: rgba(13, 71, 161, 0.95);
+    color: var(--white);
+    padding: 1.2rem 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.header-logo {
+    height: 50px;
+    width: auto;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 4px;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+nav {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+nav a {
+    color: #e3f2fd;
+    text-decoration: none;
+    margin: 0 6px;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+nav a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--white);
+}
+
+/* Authenticated user name and logout button */
+.user-info {
+    color: #e3f2fd;
+    font-size: 0.9rem;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+.logout-link {
+    background-color: rgba(198, 40, 40, 0.9);
+}
+
+.logout-link:hover {
+    background-color: #8e0000;
+}
+
+/* ---------- Main containers ---------- */
+main {
+    max-width: 800px;
+    width: 90%;
+    margin: 2.5rem auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    flex: 1;
+}
+
+/* Wider container for the listing table */
+.main-ancho {
+    max-width: 1150px;
+}
+
+/* Narrow container for the login form */
+.main-login {
+    max-width: 460px;
+}
+
+.hero-logo {
+    max-width: 180px;
+    height: auto;
+    display: block;
+    margin: 0 auto 1.5rem auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: #fff;
+    padding: 8px;
+}
+
+h2 {
+    color: var(--dark-color);
+    margin-bottom: 1.2rem;
+    font-weight: 600;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 0.5rem;
+}
+
+.texto-intro {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    color: #455a64;
+}
+
+.texto-conteo {
+    margin: 1rem 0;
+    color: #546e7a;
+}
+
+/* ---------- Forms ---------- */
+.form-group {
+    margin-bottom: 1.2rem;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: #424242;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    background-color: #fff;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 5px rgba(21, 101, 192, 0.3);
+}
+
+/* Three grade inputs side by side, stacked on small screens */
+.fila-notas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.form-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: 0.8rem 1.8rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.1s;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+.btn-secundario {
+    background-color: #607d8b;
+}
+
+.btn-secundario:hover {
+    background-color: #455a64;
+}
+
+.btn-peligro {
+    background-color: var(--error-color);
+}
+
+.btn-peligro:hover {
+    background-color: #8e0000;
+}
+
+.btn-bloque {
+    width: 100%;
+}
+
+/* ---------- Tables ---------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+
+table th, table td {
+    padding: 0.9rem;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+table th {
+    background-color: #f5f5f5;
+    color: var(--dark-color);
+    width: 40%;
+}
+
+/* Horizontal scroll wrapper for the listing on narrow screens */
+.tabla-responsive {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 1rem;
+}
+
+/* Listing table: 8 columns, so header cells must not force 40% width */
+.tabla-listado {
+    min-width: 900px;
+    margin-top: 0;
+}
+
+.tabla-listado th {
+    width: auto;
+    white-space: nowrap;
+}
+
+.tabla-listado td {
+    vertical-align: middle;
+}
+
+.tabla-listado tbody tr:hover {
+    background-color: #f0f7ff;
+}
+
+.celda-promedio {
+    font-weight: 700;
+    color: var(--primary-color);
+    white-space: nowrap;
+}
+
+.acciones {
+    white-space: nowrap;
+}
+
+.acciones a {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-right: 0.75rem;
+}
+
+.acciones .editar {
+    color: var(--secondary-color);
+}
+
+.acciones .eliminar {
+    color: var(--error-color);
+}
+
+.acciones a:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Status badges ---------- */
+.status-badge {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-weight: bold;
+    color: var(--white);
+    display: inline-block;
+}
+
+.approved {
+    background-color: var(--success-color);
+}
+
+.failed {
+    background-color: var(--error-color);
+}
+
+/* ---------- Alerts and messages ---------- */
+.alert {
+    padding: 1rem 1.2rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+}
+
+.alert-danger {
+    background-color: #ffebee;
+    color: var(--error-color);
+    border-left: 5px solid var(--error-color);
+}
+
+.alert-info {
+    background-color: #e3f2fd;
+    color: var(--primary-color);
+    border-left: 5px solid var(--accent-color);
+}
+
+.alert-success {
+    background-color: #e8f5e9;
+    color: #1b5e20;
+    border-left: 5px solid var(--success-color);
+}
+
+.lista-errores {
+    margin: 0.6rem 0 0 1.2rem;
+    line-height: 1.5;
+}
+
+/* ---------- Login card ---------- */
+.auth-card {
+    text-align: left;
+}
+
+.auth-texto {
+    color: #546e7a;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+/* ---------- Dashboard ---------- */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.card-stat {
+    background: #f5f8ff;
+    border: 1px solid #dbe6f7;
+    border-radius: 10px;
+    padding: 1.2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.stat-num {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-ok {
+    color: var(--success-color);
+}
+
+.stat-fail {
+    color: var(--error-color);
+}
+
+.stat-label {
+    color: #546e7a;
+    font-size: 0.9rem;
+}
+
+.card-accion {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    background: #fff;
+    border: 1px solid #e0e6ef;
+    border-radius: 10px;
+    padding: 1.2rem;
+    text-decoration: none;
+    color: #37474f;
+    transition: box-shadow 0.2s, transform 0.15s;
+}
+
+.card-accion:hover {
+    box-shadow: 0 6px 18px rgba(13, 71, 161, 0.15);
+    transform: translateY(-2px);
+}
+
+.card-accion strong {
+    color: var(--dark-color);
+}
+
+.card-icono {
+    font-size: 1.5rem;
+}
+
+/* ---------- Search bar ---------- */
+.buscador {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+}
+
+.buscador input[type="search"] {
+    flex: 1 1 260px;
+}
+
+/* ---------- Delete confirmation ---------- */
+.confirm-card {
+    background: #fff8f8;
+    border: 1px solid #f3c6c6;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.confirm-texto {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.confirm-datos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.confirm-datos li {
+    padding: 0.35rem 0;
+    border-bottom: 1px dashed #f3c6c6;
+}
+
+/* ---------- Footer ---------- */
+footer {
+    background-color: rgba(26, 35, 126, 0.95);
+    color: var(--white);
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    margin-top: auto;
+}
+
+.footer-sub {
+    font-size: 0.78rem;
+    opacity: 0.8;
+    margin-top: 0.3rem;
+}
+
+/* ---------- Small screens (responsive) ---------- */
+@media (max-width: 700px) {
+    header {
+        padding: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.3rem;
+    }
+
+    main {
+        width: 95%;
+        padding: 1.3rem;
+        margin: 1.5rem auto;
+    }
+
+    .fila-notas {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .form-acciones {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-acciones .btn,
+    .form-acciones button {
+        width: 100%;
+    }
+
+    .buscador {
+        flex-direction: column;
+    }
+
+    .buscador .btn {
+        width: 100%;
+    }
+
+    .tabla-listado {
+        min-width: 760px;
+        font-size: 0.9rem;
+    }
+}
